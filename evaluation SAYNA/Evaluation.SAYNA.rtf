@@ -1,0 +1,824 @@
+{\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Courier New;}{\f1\fnil Courier New;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\f0\fs22\lang1036\par
+USE biblio;\par
+\par
+CREATE TABLE oeuvres(\par
+\tab NO \tab\tab integer primary key auto_increment,\par
+\tab titre \tab\tab varchar(150) not null,\par
+\tab auteur \tab\tab varchar(100),\par
+\tab annee\tab\tab integer,\par
+\tab genre\tab\tab varchar(30)\par
+) ENGINE InnoDB;\par
+\par
+CREATE TABLE adherents (\par
+\tab NA\tab\tab INT PRIMARY KEY AUTO_INCREMENT,\par
+\tab nom\tab\tab VARCHAR(30) not null,\par
+\tab prenom\tab\tab VARCHAR(30),\par
+\tab adr\tab\tab VARCHAR(100) not null,\par
+\tab tel\tab\tab CHAR(10)\par
+) ENGINE InnoDB;\par
+\par
+CREATE TABLE livres (\par
+\tab NL\tab\tab integer primary key auto_increment,\par
+\tab editeur\tab\tab varchar(50),\par
+\tab NO\tab\tab integer not null, foreign key(NO) references oeuvres(NO)\par
+) ENGINE InnoDB;\par
+\par
+CREATE TABLE emprunter (\par
+\tab NL\tab\tab integer not null, foreign key(NL) references livres(NL),\par
+\tab dateEmp\tab\tab date not null,\par
+\tab dureeMax\tab integer not null,\par
+\tab dateRet \tab date,\par
+\tab NA\tab\tab integer not null, foreign key(NA) references adherents(NA),\par
+\tab primary key (NL, dateEmp),\par
+\tab index(dateEmp)\par
+) ENGINE InnoDB;\par
+\\end\{minted\}\par
+\par
+\\begin\{minted\}[bgcolor=bg]\{mysql\}\par
+INSERT INTO oeuvres VALUES \par
+\tab (1,'Narcisse et Goldmund','Hermann HESSE', 1930, 'Roman'),\par
+\tab (2,'B\'c3\'a9r\'c3\'a9nice','Jean RACINE', 1670, 'Th\'c3\'a9\'c3\'a2tre'),\par
+\tab (3,'Prol\'c3\'a9gom\'c3\'a8nes \'c3\~  toute m\'c3\'a9taphysique future','Emmanuel KANT', 1783, 'Philosophie'),\par
+\tab (4,'Mon coeur mis \'c3\~ nu','Charles BAUDELAIRE', 1887, 'Journal'),\par
+\tab (5,'Voyage au bout de la nuit','Louis-Ferdinand CELINE', 1932, 'Roman'),\par
+\tab (6,'Les poss\'c3\'a9d\'c3\'a9s','Fedor DOSTOIEVSKI', 1872, 'Roman'),\par
+\tab (7,'Le Rouge et le Noir','STENDHAL', 1830, 'Roman'),\par
+\tab (8,'Alcibiade','Jacqueline de ROMILLY', 1995, 'Roman'),\par
+\tab (9,'Monsieur Teste','Paul VALERY', 1926, 'Roman'),\par
+\tab (10,'Lettres de Gourgounel','Kenneth WHITE', 1979, 'R\'c3\'a9cit'),\par
+\tab (11,'Lettres \'c3\~ un jeune po\'c3\'a8te','Rainer Maria RILKE', 1929, 'Lettre'),\par
+\tab (12,'Logique sans peine','Lewis CAROLL', 1887, 'Logique'),\par
+\tab (13,'L''\'c3\'a9thique','Baruch SPINOZA', 1677, 'Philosophie'),\par
+\tab (14,'Sur le r\'c3\'aave','Sigmund FREUD', 1900, 'Philosophie'),\par
+\tab (15,'Sens et d\'c3\'a9notation','Gottlob FREGE', 1892, 'Philosophie'),\par
+\tab (16,'Penser la logique','Gilbert HOTTOIS', 1989, 'Philosophie'),\par
+\tab (17,'Au coeur des t\'c3\'a9n\'c3\'a8bres','Joseph CONRAD',1899, 'Roman'),\par
+\tab (18,'Jan Karski','Yannick HAENEL', 2009, 'Roman');\tab\par
+\\end\{minted\}\par
+\par
+\\begin\{minted\}[bgcolor=bg]\{mysql\}\par
+INSERT INTO adherents VALUES \par
+\tab (1,'Lecoeur','Jeanette','16 rue de la R\'c3\'a9publique, 75010 Paris','0145279274'),\par
+\tab (2,'Lecoeur','Philippe','16 rue de la R\'c3\'a9publique, 75010 Paris','0145279274'),\par
+\tab (3,'Dupont','Yvan','73 rue Lamarck, 75018 Paris','0163538294'),\par
+\tab (4,'Mercier','Claude','155 avenue Parmentier, 75011 Paris','0136482736'),\par
+\tab (5,'L\'c3\'a9ger','Marc','90 avenue du Maine, 75014 Paris','0164832947'),\par
+\tab (6,'Martin','Laure','51 boulevard Diderot, 75012 Paris','0174693277'),\par
+\tab (7,'Crozier','Martine','88 rue des Portes Blanches, 75018 Paris','0146829384'),\par
+\tab (8,'Lebon','Cl\'c3\'a9ment','196 boulevard de Sebastopol, 75001 Paris','0132884739'),\par
+\tab (9,'Dufour','Jacques','32 rue des Alouettes, 75003 Paris','0155382940'),\par
+\tab (10,'Dufour','Antoine','32 rue des Alouettes, 75003 Paris','0155382940'),\par
+\tab (11,'Dufour','St\'c3\'a9phanie','32 rue des Alouettes, 75003 Paris','0155382940'),\par
+\tab (12,'Raymond','Carole','35 rue Oberkampf, 75011 Paris','0153829402'),\par
+\tab (13,'Durand','Albert','4 rue Mandar, 75002 Paris','0642374021'),\par
+\tab (14,'Wilson','Paul','12 rue Paul Vaillant Couturier, 92400 Montrouge','0642327407'),\par
+\tab (15,'Grecault','Philippe','15 rue de la Roquette, 75012 Paris','0132762983'),\par
+\tab (16,'Carre','St\'c3\'a9phane','51 boulevard Diderot, 75012 Paris','0174693277'),\par
+\tab (17,'Johnson','Astrid','3 rue L\'c3\'a9on Blum, 75002 Paris','0143762947'),\par
+\tab (18,'Mirou','Caroline','2 square Mirabeau, 75011 Paris','0163827399'),\par
+\tab (19,'Espelette','Jean-Jacques','141 avenue de France, 75019 Paris','0134887264'),\par
+\tab (20,'Despentes','Anthony','56 boulevard de la Villette, 75019 Paris','0133889463'),\par
+\tab (21,'Terlu','V\'c3\'a9ronique','45 rue des Batignolles, 75020 Paris','0165998372'),\par
+\tab (22,'Rihour','C\'c3\'a9cile','7 rue Montorgueil, 75002 Paris','0166894754'),\par
+\tab (23,'Franchet','Pierre','160 rue Montmartre, 75009 Paris','0633628549'),\par
+\tab (24,'Trochet','Ernest','34 rue de l''Esperance, 75008 Paris','0638295563'),\par
+\tab (25,'Gainard','Simon','55 rue Desnouettes, 75015 Paris','0174928934'),\par
+\tab (26,'Touche','Johanna','14 rue du Bac, 75006 Paris','0619384065'),\par
+\tab (27,'Cornu','Sylvain','22 rue Mouffetard, 75005 Paris','0184927489'),\par
+\tab (28,'Frederic','Cyril','15 rue du Simplon, 75018 Paris','0173625492'),\par
+\tab (29,'Crestard','Cedric','5 rue Doudeauville, 75018 Paris','0629485700'),\par
+\tab (30,'Le Bihan','Karine','170 bis rue Ordener, 75018 Paris','0638995221');\par
+\\end\{minted\}\par
+\\newpage\par
+\\begin\{minted\}[bgcolor=bg]\{mysql\}\par
+INSERT INTO livres VALUES\par
+\tab (1,'GF',1),\par
+\tab (2,'FOLIO',2),\par
+\tab (3,'HACHETTE',3),\par
+\tab (4,'GF',4),\par
+\tab (5,'FOLIO',5),\par
+\tab (6,'FOLIO',6),\par
+\tab (7,'GF',7),\par
+\tab (8,'FOLIO',8),\par
+\tab (9,'HACHETTE',9),\par
+\tab (10,'GF',10),\par
+\tab (11,'HACHETTE',11),\par
+\tab (12,'FOLIO',12),\par
+\tab (13,'GF',13),\par
+\tab (14,'FOLIO',14),\par
+\tab (15,'HACHETTE',15),\par
+\tab (16,'HACHETTE',16),\par
+\tab (17,'GF',1),\par
+\tab (18,'FOLIO',2),\par
+\tab (19,'HACHETTE',2),\par
+\tab (20,'FOLIO',4),\par
+\tab (21,'GF',5),\par
+\tab (22,'HACHETTE',4),\par
+\tab (23,'HACHETTE',7),\par
+\tab (24,'FOLIO',8),\par
+\tab (25,'GF',1),\par
+\tab (26,'HACHETTE',10),\par
+\tab (27,'FOLIO',11),\par
+\tab (28,'FOLIO',12),\par
+\tab (29,'GF',1),\par
+\tab (30,'HACHETTE',14),\par
+\tab (31,'FOLIO',17),\par
+\tab (32,'GALLIMARD',18);\par
+\\end\{minted\}\par
+\\newpage\par
+\\begin\{minted\}[bgcolor=bg]\{mysql\}\par
+INSERT INTO emprunter VALUES\par
+\tab (1,from_days(to_days(current_date)-350),21,from_days(to_days(current_date)-349),26),\par
+\tab (4,from_days(to_days(current_date)-323),21,from_days(to_days(current_date)-310),4),\par
+\tab (26,from_days(to_days(current_date)-315),21,from_days(to_days(current_date)-318),9),\par
+\tab (25,from_days(to_days(current_date)-311),21,from_days(to_days(current_date)-293),1),\par
+\tab (12,from_days(to_days(current_date)-300),21,from_days(to_days(current_date)-1290),7),\par
+\tab (20,from_days(to_days(current_date)-283),21,from_days(to_days(current_date)-282),27),\par
+\tab (10,from_days(to_days(current_date)-273),21,from_days(to_days(current_date)-250),7),\par
+\tab (4,from_days(to_days(current_date)-232),14,from_days(to_days(current_date)-228),12),\par
+\tab (24,from_days(to_days(current_date)-226),14,from_days(to_days(current_date)-220),26),\par
+\tab (8,from_days(to_days(current_date)-201),14,from_days(to_days(current_date)-183),13),\par
+\tab (6,from_days(to_days(current_date)-199),14,from_days(to_days(current_date)-194),3),\par
+\tab (10,from_days(to_days(current_date)-169),14,from_days(to_days(current_date)-157),8),\par
+\tab (1,from_days(to_days(current_date)-153),14,from_days(to_days(current_date)-142),3),\par
+\tab (15,from_days(to_days(current_date)-146),14,from_days(to_days(current_date)-138),10),\par
+\tab (1,from_days(to_days(current_date)-106),14,from_days(to_days(current_date)-101),2),\par
+\tab (4,from_days(to_days(current_date)-103),14,from_days(to_days(current_date)-93),5),\par
+\tab (18,from_days(to_days(current_date)-86),14,from_days(to_days(current_date)-79),3),\par
+\tab (8,from_days(to_days(current_date)-76),14,from_days(to_days(current_date)-70),18),\par
+\tab (2,from_days(to_days(current_date)-37),14,from_days(to_days(current_date)-28),4),\par
+\tab (1,from_days(to_days(current_date)-28),14,from_days(to_days(current_date)-23),1),\par
+\tab (3,from_days(to_days(current_date)-21),14,from_days(to_days(current_date)-17),3),\par
+\tab (20,from_days(to_days(current_date)-24),14,from_days(to_days(current_date)-8),9),\par
+\tab (21,from_days(to_days(current_date)-23),14,from_days(to_days(current_date)-11),14),\par
+\tab (2,from_days(to_days(current_date)-10),14, NULL,28),\par
+\tab (9,from_days(to_days(current_date)-10),14, NULL,28),\par
+\tab (14,from_days(to_days(current_date)-9),14, NULL,1),\par
+\tab (16,from_days(to_days(current_date)-9),14, NULL,1),\par
+\tab (5,from_days(to_days(current_date)-5),14, NULL,16),\par
+\tab (29,from_days(to_days(current_date)-395),14, NULL,27),\par
+\tab (11,from_days(to_days(current_date)-30),14, NULL,22),\par
+\tab (31,from_days(to_days(current_date)-1),14, NULL,20),\par
+\tab (21,from_days(to_days(current_date)-1),14, NULL,20),\par
+\tab (32,from_days(to_days(current_date)-1),14, NULL,20);\par
+\par
+\par
+\par
+SELECT COUNT(*) FROM `biblio`.`oeuvres`;\par
++----------+\par
+| COUNT(*) |\par
++----------+\par
+|       18 |\par
++----------+\par
+1 row in set (0,04 sec)\par
+\par
+Pour la table adherents :\par
+\par
+SELECT COUNT(*) FROM `biblio`.`adherents`;\par
++----------+\par
+| COUNT(*) |\par
++----------+\par
+|       30 |\par
++----------+\par
+1 row in set (0,04 sec)\par
+\par
+Pour la table livres :\par
+\par
+SELECT COUNT(*) FROM `biblio`.`livres`;\par
+\par
++----------+\par
+| COUNT(*) |\par
++----------+\par
+|       32 |\par
++----------+\par
+1 row in set (0,01 sec)\par
+\par
+\par
+Pour la table emprunter :\par
+\par
+\par
+SELECT COUNT(*) FROM `biblio`.`emprunter`;\par
++----------+\par
+| COUNT(*) |\par
++----------+\par
+|       33 |\par
++----------+\par
+1 row in set (0,05 sec)\tab\par
+\par
+\par
+le nombre totale de Tuple on fait \par
+SELECT \par
+\tab (SELECT COUNT(*) FROM `biblio`.`oeuvres`) \par
+\tab +\par
+\tab (SELECT COUNT(*) FROM `biblio`.`adherents`)\par
+\tab +\par
+\tab (SELECT COUNT(*) FROM `biblio`.`livres`)\par
+\tab +\par
+\tab (SELECT COUNT(*) FROM `biblio`.`emprunter`)\par
+\tab AS `Nombres de tuples`;\par
+\par
++-------------------+\par
+| Nombres de tuples |\par
++-------------------+\par
+|               113 |\par
++-------------------+\par
+1 row in set (0,80 sec)\par
+\par
+\{Nombre d'attribut :\}\par
+\tab DESCRIBE `biblio`.`oeuvres`;\par
+\par
++--------+--------------+------+-----+---------+----------------+\par
+| Field  | Type         | Null | Key | Default | Extra          |\par
++--------+--------------+------+-----+---------+----------------+\par
+| NO     | int          | NO   | PRI | NULL    | auto_increment |\par
+| titre  | varchar(150) | NO   |     | NULL    |                |\par
+| auteur | varchar(100) | YES  |     | NULL    |                |\par
+| annee  | int          | YES  |     | NULL    |                |\par
+| genre  | varchar(30)  | YES  |     | NULL    |                |\par
++--------+--------------+------+-----+---------+----------------+\par
+5 rows in set (0,02 sec)\par
+\tab       On a donc 5 attributs pour la table oeuvre.\par
+\par
+\tab DESCRIBE `biblio`.`adherents`;\par
+\par
++--------+--------------+------+-----+---------+----------------+\par
+| Field  | Type         | Null | Key | Default | Extra          |\par
++--------+--------------+------+-----+---------+----------------+\par
+| NA     | int          | NO   | PRI | NULL    | auto_increment |\par
+| nom    | varchar(30)  | NO   |     | NULL    |                |\par
+| prenom | varchar(30)  | YES  |     | NULL    |                |\par
+| adr    | varchar(100) | NO   |     | NULL    |                |\par
+| tel    | char(10)     | YES  |     | NULL    |                |\par
++--------+--------------+------+-----+---------+----------------+\par
+5 rows in set (0,00 sec)\par
+\par
+\par
+\tab       Donc on a 5 pour la tables adherents.\par
+\par
+\par
+DESCRIBE `biblio`.`livres`;\par
+\par
++---------+-------------+------+-----+---------+----------------+\par
+| Field   | Type        | Null | Key | Default | Extra          |\par
++---------+-------------+------+-----+---------+----------------+\par
+| NL      | int         | NO   | PRI | NULL    | auto_increment |\par
+| editeur | varchar(50) | YES  |     | NULL    |                |\par
+| NO      | int         | NO   | MUL | NULL    |                |\par
++---------+-------------+------+-----+---------+----------------+\par
+3 rows in set (0,03 sec)\par
+\par
+\tab       Donc on a 3 attributs por la table livres.\par
+\par
+DESCRIBE `biblio`.`emprunter`;\par
+\par
++----------+------+------+-----+---------+-------+\par
+| Field    | Type | Null | Key | Default | Extra |\par
++----------+------+------+-----+---------+-------+\par
+| NL       | int  | NO   | PRI | NULL    |       |\par
+| dateEmp  | date | NO   | PRI | NULL    |       |\par
+| dureeMax | int  | NO   |     | NULL    |       |\par
+| dateRet  | date | YES  |     | NULL    |       |\par
+| NA       | int  | NO   | MUL | NULL    |       |\par
++----------+------+------+-----+---------+-------+\par
+5 rows in set (0,07 sec)\par
+\par
+\tab       Donc on a 5 attributs pour la table emprunter\par
+\par
+\{Liste des cl\'c3\'a9 Primaire\}\par
+\par
+\par
+\par
+SELECT COLUMN_NAME AS PRIMARY_KEY\par
+FROM INFORMATION_SCHEMA.COLUMNS\par
+WHERE TABLE_SCHEMA = 'biblio'\par
+AND TABLE_NAME = '<nom_table>' -- Nom de la tables\par
+AND COLUMN_KEY = 'PRI';\\end\{minted\}\par
+\par
+Pour la table oeuvres : NO\par
+\par
+\par
++-------------+\par
+| PRIMARY_KEY |\par
++-------------+\par
+| NO          |\par
++-------------+\par
+1 row in set (0,00 sec)\par
+\par
+\par
+Pour la table adherents : NA\par
+\par
+\par
++-------------+\par
+| PRIMARY_KEY |\par
++-------------+\par
+| NA          |\par
++-------------+\par
+1 row in set (0,00 sec)\par
+\par
+\par
+Pour la table livres : NL\par
+\par
+\par
++-------------+\par
+| PRIMARY_KEY |\par
++-------------+\par
+| NL          |\par
++-------------+\par
+1 row in set (0,00 sec)\par
+\par
+\par
+Pour la table emprunter : NL,dateEmp\par
++-------------+\par
+| PRIMARY_KEY |\par
++-------------+\par
+| NL          |\par
+| dateEmp     |\par
++-------------+\par
+2 rows in set (0,00 sec)\par
+\par
+\par
+\par
+\{Int\'c3\'a9raction avec la base de donn\'c3\'a9\}\par
+\par
+CREATE \par
+\tab ALGORITHM = UNDEFINED \par
+\tab DEFINER = `root`@`localhost` \par
+\tab SQL SECURITY DEFINER\par
+VIEW `Livres_Oeuvres` AS\par
+\tab SELECT \par
+\tab\tab `livres`.`NL` AS `NL`,\par
+\tab\tab `oeuvres`.`NO` AS `NO`,\par
+\tab\tab `oeuvres`.`titre` AS `titre`,\par
+\tab\tab `oeuvres`.`auteur` AS `auteur`,\par
+\tab\tab `livres`.`editeur` AS `editeur`,\par
+\tab\tab `oeuvres`.`annee` AS `annee`,\par
+\tab\tab `oeuvres`.`genre` AS `genre`\par
+\tab FROM\par
+\tab\tab (`livres`\par
+\tab\tab JOIN `oeuvres` ON ((`livres`.`NO` = `oeuvres`.`NO`)))\par
+\tab ORDER BY `livres`.`NL`;\par
+\par
+CREATE \par
+    ALGORITHM = UNDEFINED \par
+    DEFINER = `root`@`localhost` \par
+    SQL SECURITY DEFINER\par
+VIEW `Adherent_Emprunt` AS\par
+SELECT \par
+    `emprunter`.`NL` AS `NL`,\par
+    `emprunter`.`dateEmp` AS `dateEmp`,\par
+    `emprunter`.`dureeMax` AS `dureeMax`,\par
+    `emprunter`.`dateRet` AS `dateRet`,\par
+    `adherents`.`NA` AS `NA`,\par
+    `adherents`.`nom` AS `nom`,\par
+    `adherents`.`prenom` AS `prenom`\par
+FROM\par
+    (`emprunter`\par
+    JOIN `adherents`)\par
+WHERE\par
+    (`emprunter`.`NA` = `adherents`.`NA`)\par
+ORDER BY `emprunter`.`NL` , `emprunter`.`dateEmp`\par
+\\end\{minted\}\par
+\par
+CREATE \par
+    ALGORITHM = UNDEFINED \par
+    DEFINER = `root`@`localhost` \par
+    SQL SECURITY DEFINER\par
+VIEW `Livre_Oeuvres_Adherent_Emprunt` AS\par
+    SELECT \par
+        `Adherent_Emprunt`.`dateEmp` AS `dateEmp`,\par
+        `Adherent_Emprunt`.`dateRet` AS `dateRet`,\par
+        `Livres_Oeuvres`.`NL` AS `NL`,\par
+        `Livres_Oeuvres`.`titre` AS `titre`,\par
+\tab\tab `Adherent_Emprunt`.`NA` AS `NA`,\par
+        `Adherent_Emprunt`.`nom` AS `nom`,\par
+        `Adherent_Emprunt`.`prenom` AS `prenom`\par
+    FROM\par
+        (`Livres_Oeuvres`\par
+        JOIN `Adherent_Emprunt` ON ((`Livres_Oeuvres`.`NL` = `Adherent_Emprunt`.`NL`)))\par
+ORDER BY `Adherent_Emprunt`.`dateEmp` , `Livres_Oeuvres`.`NL`\par
+\\end\{minted\}\par
+\par
+\{Quels sont les livres actuellement emprunt\'c3\'a9s ?\}\par
+\par
+\par
+SELECT \tab DISTINCT(emprunter.NL),titre,auteur,editeur,annee \par
+\tab\tab FROM Livres_Oeuvres \par
+\tab\tab INNER JOIN emprunter \par
+\tab\tab ON emprunter.NL=Livres_Oeuvres.NL \par
+ORDER BY NL;\par
+\par
++----+------------------------------------------+------------------------+-----------+-------+\par
+| NL | titre                                    | auteur                 | editeur   | annee |\par
++----+------------------------------------------+------------------------+-----------+-------+\par
+|  1 | Narcisse et Goldmund                     | Hermann HESSE          | GF        |  1930 |\par
+|  2 | B\'c3\'a9r\'c3\'a9nice                                 | Jean RACINE            | FOLIO     |  1670 |\par
+|  3 | Prol\'c3\'a9gom\'c3\'a8nes \'c3\~  toute m\'c3\'a9taphysique future| Emmanuel KANT          | HACHETTE  |  1783 |\par
+|  4 | Mon coeur mis \'c3\~ nu                       | Charles BAUDELAIRE     | GF        |  1887 |\par
+|  5 | Voyage au bout de la nuit                | Louis-Ferdinand CELINE | FOLIO     |  1932 |\par
+|  6 | Les poss\'c3\'a9d\'c3\'a9s                             | Fedor DOSTOIEVSKI      | FOLIO     |  1872 |\par
+|  8 | Alcibiade                                | Jacqueline de ROMILLY  | FOLIO     |  1995 |\par
+|  9 | Monsieur Teste                           | Paul VALERY            | HACHETTE  |  1926 |\par
+| 10 | Lettres de Gourgounel                    | Kenneth WHITE          | GF        |  1979 |\par
+| 11 | Lettres \'c3\~ un jeune po\'c3\'a8te                 | Rainer Maria RILKE     | HACHETTE  |  1929 |\par
+| 12 | Logique sans peine                       | Lewis CAROLL           | FOLIO     |  1887 |\par
+| 14 | Sur le r\'c3\'aave                              | Sigmund FREUD          | FOLIO     |  1900 |\par
+| 15 | Sens et d\'c3\'a9notation                       | Gottlob FREGE          | HACHETTE  |  1892 |\par
+| 16 | Penser la logique                        | Gilbert HOTTOIS        | HACHETTE  |  1989 |\par
+| 18 | B\'c3\'a9r\'c3\'a9nice                                 | Jean RACINE            | FOLIO     |  1670 |\par
+| 20 | Mon coeur mis \'c3\~ nu                       | Charles BAUDELAIRE     | FOLIO     |  1887 |\par
+| 21 | Voyage au bout de la nuit                | Louis-Ferdinand CELINE | GF        |  1932 |\par
+| 24 | Alcibiade                                | Jacqueline de ROMILLY  | FOLIO     |  1995 |\par
+| 25 | Narcisse et Goldmund                     | Hermann HESSE          | GF        |  1930 |\par
+| 26 | Lettres de Gourgounel                    | Kenneth WHITE          | HACHETTE  |  1979 |\par
+| 29 | Narcisse et Goldmund                     | Hermann HESSE          | GF        |  1930 |\par
+| 31 | Au coeur des t\'c3\'a9n\'c3\'a8bres                    | Joseph CONRAD          | FOLIO     |  1899 |\par
+| 32 | Jan Karski                               | Yannick HAENEL         | GALLIMARD |  2009 |\par
++----+------------------------------------------+------------------------+-----------+-------+\par
+23 rows in set (0,00 sec)\par
+\\end\{minted\}\par
+\par
+\{Quels sont les livres emprunt\'c3\'a9s par Jeannette Lecoeur ? V\'c3\'a9rifier dans\par
+\tab la r\'c3\'a9ponse qu'il n'y a pas d'homonymes.\}\par
+\par
+\par
+\par
+SELECT * FROM biblio.Livre_Oeuvres_Adherent_Emprunt\par
+\tab\tab WHERE nom='Lecoeur' and prenom='Jeannette';\par
+\par
+Empty set (0,00 sec)\par
+\\end\{minted\}\par
+\par
+Aucun R\'c3\'a9sultat;\par
+\par
+\par
+\\begin\{minted\}[bgcolor=bg]\{mysql\}\par
+SELECT * FROM biblio.Livre_Oeuvres_Adherent_Emprunt WHERE nom='Lecoeur' and prenom='Jeanette';\par
+\par
++------------+------------+----+----------------------+-----------------+---------+----------+\par
+| dateEmp    | dateRet    | NL | titre                | auteur          | nom     | prenom   |\par
++------------+------------+----+----------------------+-----------------+---------+----------+\par
+| 2021-08-20 | 2021-09-07 | 25 | Narcisse et Goldmund | Hermann HESSE   | Lecoeur | Jeanette |\par
+| 2022-05-30 | 2022-06-04 |  1 | Narcisse et Goldmund | Hermann HESSE   | Lecoeur | Jeanette |\par
+| 2022-06-18 | NULL       | 14 | Sur le r\'c3\'aave          | Sigmund FREUD   | Lecoeur | Jeanette |\par
+| 2022-06-18 | NULL       | 16 | Penser la logique    | Gilbert HOTTOIS | Lecoeur | Jeanette |\par
++------------+------------+----+----------------------+-----------------+---------+----------+\par
+
+\pard 4 rows in set (0,00 sec)runt\'c3\'a9s en septembre 2009\}\par
+\\begin\{minted\}[bgcolor=bg]\{mysql\}\par
+SELECT dateEmp,DISTINCT(NL),titre,auteur FROM biblio.Livre_Oeuvres_Adherent_Emprunt\par
+WHERE dateEmp BETWEEN '2009-09-01' AND '2009-09-30';\par
+\par
+Empty set (0,00 sec)\par
+\par
+\{Tous les adh\'c3\'a9rents qui ont emprunt\'c3\'a9 un livre de Fedor Dostoievski.\}\par
+
+\pard\par
+\par
+\{Quels sont tous les livres empSELECT\tab dateEmp,NL,titre,auteur,NA,nom,prenom \par
+\tab\tab FROM biblio.Livre_Oeuvres_Adherent_Emprunt \par
+\tab\tab WHERE auteur='Fedor DOSTOIEVSKI';\par
+\par
++------------+----+----------------+-------------------+----+--------+--------+\par
+| dateEmp    | NL | titre          | auteur            | NA | nom    | prenom |\par
++------------+----+----------------+-------------------+----+--------+--------+\par
+| 2021-12-10 |  6 | Les poss\'c3\'a9d\'c3\'a9s   | Fedor DOSTOIEVSKI |  3 | Dupont | Yvan   |\par
++------------+----+----------------+-------------------+----+--------+--------+\par
+1 row in set (0,00 sec)\par
+\par
+\par
+Olivier DUPOND, 76, quai de la Loire,\par
+\tab 75019 Paris, t\'c3\'a9l\'c3\'a9phone : 0102030405\}\par
+\par
+INSERT INTO `biblio`.`adherents` (`nom`, `prenom`, `adr`, `tel`) \par
+\tab VALUES ('Dupon', 'Olivier', '76 quai de la Loire, 75019 Paris', '0102030405');\par
+\par
+Query OK, 1 row affected (0,18 sec)\par
+\par
+\par
+\par
+\{Martine CROZIER vient d\'e2\'80\'99emprunter \'c2\'ab Au coeur des t\'c3\'a9n\'c3\'a8bres \'c2\'bb que vous venez\par
+\tab d\'e2\'80\'99ajouter et \'c2\'ab Le rouge et le noir \'c2\'bb chez Hachette, livre n\'c2\'b023. Faire les mises \'c3\~\par
+\tab jour de la BD.\}\par
+\par
+\par
+\tab      \par
+SELECT * FROM adherents WHERE nom='Crozier' and prenom='Martine';\par
+\par
++----+---------+---------+-----------------------------------------+------------+\par
+| NA | nom     | prenom  | adr                                     | tel        |\par
++----+---------+---------+-----------------------------------------+------------+\par
+|  7 | Crozier | Martine | 88 rue des Portes Blanches, 75018 Paris | 0146829384 |\par
++----+---------+---------+-----------------------------------------+------------+\par
+1 row in set (0,01 sec)\par
+\tab\\item Trouver les deux Livres \'c3\~ emprunter\par
+\par
+SELECT * FROM biblio.Livres_Oeuvres\par
+\tab WHERE titre='Au coeur des t\'c3\'a9n\'c3\'a8bres' \par
+\tab OR \par
+\tab (titre='Le rouge et le noir' AND editeur='Hachette' AND NL=23);\par
+\tab\par
++----+----+-------------------------+---------------+----------+-------+-------+\par
+| NL | NO | titre                   | auteur        | editeur  | annee | genre |\par
++----+----+-------------------------+---------------+----------+-------+-------+\par
+| 23 |  7 | Le Rouge et le Noir     | STENDHAL      | HACHETTE |  1830 | Roman |\par
+| 31 | 17 | Au coeur des t\'c3\'a9n\'c3\'a8bres   | Joseph CONRAD | FOLIO    |  1899 | Roman |\par
++----+----+-------------------------+---------------+----------+-------+-------+\par
+2 rows in set (0,00 sec)\par
+\par
+\tab\\item Ins\'c3\'a9r\'c3\'a9r le NA de l'empruntuer, le NL des livres \'c3\~ emprunter,la date d'emprunt dateEmp et la dur\'c3\'a9e maximum dureeMax d'emprunt\par
+\par
+INSERT INTO `biblio`.`emprunter` (`NL`, `dateEmp`, `dureeMax`, `NA`) \par
+\tab VALUES \par
+\tab\tab ('31', '2022-06-28', '14', '7'),\par
+\tab\tab ('23', '2022-06-28', '14', '7');\par
+\par
+\tab\par
+\par
+\{ M. Cyril FREDERIC ram\'c3\'a8ne les livres qu\'e2\'80\'99il a emprunt\'c3\'a9s. Faire la mise \'c3\~ jour de\par
+\tab la BD.\}\par
+\par
+\tab SELECT \par
+\tab\tab *\par
+FROM\par
+\tab biblio.Livre_Oeuvres_Adherent_Emprunt\par
+\tab WHERE \par
+\tab\tab nom='Frederic' AND prenom='Cyril';\par
+\par
++------------+---------+----+----------------+-------------+----+----------+--------+\par
+| dateEmp    | dateRet | NL | titre          | auteur      | NA | nom      | prenom |\par
++------------+---------+----+----------------+-------------+----+----------+--------+\par
+| 2022-06-17 | NULL    |  2 | B\'c3\'a9r\'c3\'a9nice       | Jean RACINE | 28 | Frederic | Cyril  |\par
+| 2022-06-17 | NULL    |  9 | Monsieur Teste | Paul VALERY | 28 | Frederic | Cyril  |\par
++------------+---------+----+----------------+-------------+----+----------+--------+\par
+\par
+\tab\par
+on a les deux cl\'c3\'a9 primire pour mettre \'c3\~ jour la table emprunt : (2,2022-06-17) et (9,2022-06-17)\par
+\par
+UPDATE `biblio`.`emprunter` SET `dateRet` = '2022-06-28' \par
+\tab WHERE (`NL` = '2') and (`dateEmp` = '2022-06-17');\par
+\par
+Query OK, 1 row affected (0,21 sec)\par
+Rows matched: 1  Changed: 1  Warnings: 0\par
+\par
+\tab\tab\tab\par
+\par
+UPDATE `biblio`.`emprunter` SET `dateRet` = '2022-06-28' \par
+\tab WHERE (`NL` = '9') and (`dateEmp` = '2022-06-17');\par
+\par
+\par
+\{M. Cyril FREDERIC essaye d\'e2\'80\'99emprunter le livre n\'c2\'b023. Ecrire la requ\'c3\'aate. Que constatez-vous ?\}\par
+\par
+INSERT INTO `biblio`.`emprunter` (`NL`, `dateEmp`, `dureeMax`,  `NA`) \par
+\tab\tab VALUES ('23', '2022-06-28', '14', '28');\par
+\par
+\par
+ERROR 1062 (23000): Duplicate entry '23-2022-06-28' for key 'emprunter.PRIMARY'\par
+\par
+On a une erreur qui indique que la  cl\'c3\'a9 primaire dateEmp est dupliquer.\par
+\par
+\par
+\{M. Cyril FREDERIC essaye d\'e2\'80\'99emprunter le livre n\'c2\'b029. \'c3\f1\'89crire la requ\f0\'c3\'aate. Que constatez-vous ?\}\par
+On sait que le NA de M. Cyril FREDERIC est 28, et il  essay d'emprunter le livre N\'c2\'b0 29 :\par
+On execute alors :\par
+\par
+INSERT INTO `biblio`.`emprunter` (`NL`, `dateEmp`, `dureeMax`,  `NA`) \par
+\tab\tab VALUES ('29', '2022-06-28', '14', '28');\par
+\par
+\tab\tab Query OK, 1 row affected (0,81 sec)\par
+\\end\{minted\}\par
+La requ\'c3\'aate est r\'c3\'a9ussie.\par
+\par
+\{Quels sont le ou les auteurs du titre \'c2\'ab Voyage au bout de la nuit \'c2\'bb\}\par
+\par
+SELECT * FROM biblio.oeuvres\par
+\par
+\tab\tab WHERE titre='Voyage au bout de la nuit';\par
++----+---------------------------+------------------------+-------+-------+\par
+| NO | titre                     | auteur                 | annee | genre |\par
++----+---------------------------+------------------------+-------+-------+\par
+|  5 | Voyage au bout de la nuit | Louis-Ferdinand CELINE |  1932 | Roman |\par
++----+---------------------------+------------------------+-------+-------+\par
+\par
+\par
+1 row in set (0,00 sec)\par
+\par
+\{Quels sont les ou les \'c3\'a9diteurs du titre \'c2\'ab Narcisse et Goldmund \'c2\'bb\}\par
+\par
+SELECT DISTINCT(`NO`),titre,editeur FROM biblio.Livres_Oeuvres\par
+\tab WHERE titre='Narcisse et Goldmund';\par
+\par
++----+----------------------+---------+\par
+| NO | titre                | editeur |\par
++----+----------------------+---------+\par
+|  1 | Narcisse et Goldmund | GF      |\par
++----+----------------------+---------+\par
+1 row in set (0,05 sec)\par
+\par
+\par
+\{Quels sont les adh\'c3\'a9rents actuellement en retard ?\}\par
+\par
+\par
+SELECT * FROM Adherent_Emprunt\par
+    WHERE date_add(dateEmp,INTERVAL + dureeMax DAY ) > current_date AND dateRet IS NULL;\par
+\par
+\par
++----+------------+----------+---------+----+-----------+-----------+\par
+| NL | dateEmp    | dureeMax | dateRet | NA | nom       | prenom    |\par
++----+------------+----------+---------+----+-----------+-----------+\par
+|  5 | 2022-06-22 |       14 | NULL    | 16 | Carre     | St\'c3\'a9phane  |\par
+| 14 | 2022-06-18 |       14 | NULL    |  1 | Lecoeur   | Jeanette  |\par
+| 16 | 2022-06-18 |       14 | NULL    |  1 | Lecoeur   | Jeanette  |\par
+| 21 | 2022-06-26 |       14 | NULL    | 20 | Despentes | Anthony   |\par
+| 23 | 2022-06-28 |       14 | NULL    |  7 | Crozier   | Martine   |\par
+| 29 | 2022-06-28 |       14 | NULL    | 28 | Frederic  | Cyril     |\par
+| 31 | 2022-06-26 |       14 | NULL    | 20 | Despentes | Anthony   |\par
+| 31 | 2022-06-28 |       14 | NULL    |  7 | Crozier   | Martine   |\par
+| 32 | 2022-06-26 |       14 | NULL    | 20 | Despentes | Anthony   |\par
++----+------------+----------+---------+----+-----------+-----------+\par
+9 rows in set (0,00 sec)\par
+\par
+\\subsection\{Quels sont les livres actuellement en retard ?\}\par
+\par
+SELECT dateEmp,dateRet,dureeMax,NL,titre FROM biblio.Livre_Oeuvres_Adherent_Emprunt\par
+\tab WHERE date_add(dateEmp,INTERVAL + dureeMax DAY ) > current_date \par
+\tab AND dateRet IS NULL ORDER BY NA;\par
+\par
++------------+---------+----------+----+---------------------------+\par
+| dateEmp    | dateRet | dureeMax | NL | titre                     |\par
++------------+---------+----------+----+---------------------------+\par
+| 2022-06-18 | NULL    |       14 | 14 | Sur le r\'c3\'aave               |\par
+| 2022-06-18 | NULL    |       14 | 16 | Penser la logique         |\par
+| 2022-06-22 | NULL    |       14 |  5 | Voyage au bout de la nuit |\par
+| 2022-06-26 | NULL    |       14 | 21 | Voyage au bout de la nuit |\par
+| 2022-06-26 | NULL    |       14 | 31 | Au coeur des t\'c3\'a9n\'c3\'a8bres     |\par
+| 2022-06-26 | NULL    |       14 | 32 | Jan Karski                |\par
+| 2022-06-28 | NULL    |       14 | 23 | Le Rouge et le Noir       |\par
+| 2022-06-28 | NULL    |       14 | 29 | Narcisse et Goldmund      |\par
+| 2022-06-28 | NULL    |       14 | 31 | Au coeur des t\'c3\'a9n\'c3\'a8bres     |\par
++------------+---------+----------+----+---------------------------+\par
+9 rows in set (0,21 sec)\par
+\par
+\{Quels sont les adh\'c3\'a9rents en retard avec le nombre de livre en retard et la moyenne du nombre de jour de retard.\}\par
+\par
+SELECT COUNT(NL) AS Nbr_de_Livre, NA ,nom ,prenom\par
+    ROUND(AVG(to_days(date_add(dateEmp,INTERVAL + dureeMax DAY ))-to_days(current_date())))\par
+\tab AS Retard_Moyenne\par
+\tab FROM biblio.Livre_Oeuvres_Adherent_Emprunt\par
+\tab WHERE date_add(dateEmp,INTERVAL + dureeMax DAY ) > current_date and dateRet is NULL\par
+\tab GROUP BY NA;\par
++--------------+----+-----------+-----------+----------------+\par
+| Nbr_de_Livre | NA | nom       | prenom    | Retard_Moyenne |\par
++--------------+----+-----------+-----------+----------------+\par
+|            1 | 16 | Carre     | St\'c3\'a9phane  |              8 |\par
+|            2 |  1 | Lecoeur   | Jeanette  |              4 |\par
+|            3 | 20 | Despentes | Anthony   |             12 |\par
+|            2 |  7 | Crozier   | Martine   |             14 |\par
+|            1 | 28 | Frederic  | Cyril     |             14 |\par
++--------------+----+-----------+-----------+----------------+\par
+5 rows in set (0,06 sec)\par
+\\end\{minted\}\par
+\\subsection\{Nombre de livres emprunt\'c3\'a9es par auteur.\}\par
+\\begin\{minted\}[bgcolor=bg]\{mysql\}\par
+SELECT COUNT(NL) AS Nbr_Livre,auteur \par
+\tab FROM biblio.Livre_Oeuvres_Adherent_Emprunt \par
+\tab GROUP BY auteur;\par
+\par
++-----------+------------------------+\par
+| Nbr_Livre | auteur                 |\par
++-----------+------------------------+\par
+|         7 | Hermann HESSE          |\par
+|         1 | Sigmund FREUD          |\par
+|         1 | Gilbert HOTTOIS        |\par
+|         1 | Emmanuel KANT          |\par
+|         1 | Fedor DOSTOIEVSKI      |\par
+|         3 | Jean RACINE            |\par
+|         5 | Charles BAUDELAIRE     |\par
+|         3 | Kenneth WHITE          |\par
+|         1 | Lewis CAROLL           |\par
+|         1 | STENDHAL               |\par
+|         2 | Joseph CONRAD          |\par
+|         1 | Gottlob FREGE          |\par
+|         3 | Jacqueline de ROMILLY  |\par
+|         3 | Louis-Ferdinand CELINE |\par
+|         1 | Yannick HAENEL         |\par
+|         1 | Rainer Maria RILKE     |\par
+|         1 | Paul VALERY            |\par
++-----------+------------------------+\par
+17 rows in set (0,00 sec)\tab\par
+\par
+\par
+\{Nombre de livres emprunt\'c3\'a9s par \'c3\'a9diteur.\}\par
+\par
+SELECT COUNT(NL) AS Nbr_Livres ,editeur\par
+\tab FROM biblio.Livre_Oeuvres_Adherent_Emprunt\par
+\tab GROUP BY editeur;\par
+\par
++------------+-----------+\par
+| Nbr_Livres | editeur   |\par
++------------+-----------+\par
+|         14 | GF        |\par
+|         14 | FOLIO     |\par
+|          7 | HACHETTE  |\par
+|          1 | GALLIMARD |\par
++------------+-----------+\par
+4 rows in set (0,00 sec)\par
+\par
+\par
+\{Dur\'c3\'a9e moyenne des emprunts rendus. On commencera par afficher les dur\'c3\'a9es emprunts rendus.\}\par
+\par
+\par
+SELECT dateEmp,dateRet,dateRet-dateEmp AS Duree,NL \par
+\tab From emprunter \par
+\tab WHERE dateRet IS NOT NULL ORDER BY Duree;\par
+\par
++------------+------------+--------+----+\par
+| dateEmp    | dateRet    | Duree  | NL |\par
++------------+------------+--------+----+\par
+| 2021-08-31 | 2018-12-15 | -29616 | 12 |\par
+| 2021-08-16 | 2021-08-13 |     -3 | 26 |\par
+| 2021-09-17 | 2021-09-18 |      1 | 20 |\par
+| 2021-07-12 | 2021-07-13 |      1 |  1 |\par
+| 2022-06-06 | 2022-06-10 |      4 |  3 |\par
+| 2021-11-07 | 2021-11-11 |      4 |  4 |\par
+| 2022-03-13 | 2022-03-18 |      5 |  1 |\par
+| 2021-12-10 | 2021-12-15 |      5 |  6 |\par
+| 2022-04-12 | 2022-04-18 |      6 |  8 |\par
+| 2021-11-13 | 2021-11-19 |      6 | 24 |\par
+| 2022-04-02 | 2022-04-09 |      7 | 18 |\par
+| 2022-02-01 | 2022-02-09 |      8 | 15 |\par
+| 2022-05-21 | 2022-05-30 |      9 |  2 |\par
+| 2022-03-16 | 2022-03-26 |     10 |  4 |\par
+| 2022-06-17 | 2022-06-28 |     11 |  9 |\par
+| 2022-06-17 | 2022-06-28 |     11 |  2 |\par
+| 2022-01-09 | 2022-01-21 |     12 | 10 |\par
+| 2022-06-04 | 2022-06-16 |     12 | 21 |\par
+| 2021-08-08 | 2021-08-21 |     13 |  4 |\par
+| 2022-06-03 | 2022-06-19 |     16 | 20 |\par
+| 2021-12-08 | 2021-12-26 |     18 |  8 |\par
+| 2022-05-30 | 2022-06-04 |     74 |  1 |\par
+| 2022-01-25 | 2022-02-05 |     80 |  1 |\par
+| 2021-08-20 | 2021-09-07 |     87 | 25 |\par
+| 2021-09-27 | 2021-10-20 |     93 | 10 |\par
++------------+------------+--------+----+\par
+25 rows in set (0,00 sec)\par
+\par
+ pour obtenir la dur\'c3\'a9e mmoyenne on fait\par
+\par
+\par
+SELECT AVG(dateRet-dateEmp) AS DureeMoyenne\par
+From emprunter WHERE dateRet IS NOT NULL;\par
++--------------+\par
+| DureeMoyenne |\par
++--------------+\par
+|   -1165.0400 |\par
++--------------+\par
+1 row in set (0,00 sec)\par
+\par
+\par
+\{Dur\'c3\'a9e moyenne des retards pour l\'e2\'80\'99ensemble des emprunts.\}\par
+\par
+\par
+SELECT\tab AVG(CASE\par
+\tab\tab\tab\tab WHEN dateRet IS NULL THEN\par
+\tab\tab\tab\tab\tab CURRENT_DATE() - dateEmp\par
+\tab\tab\tab\tab ELSE dateRet - dateEmp\par
+\tab\tab\tab END) AS Duree_retard\par
+\tab\tab\tab FROM emprunter     \par
+\tab\tab WHERE ((CASE\par
+\tab\tab\tab\tab\tab WHEN dateRet IS NULL THEN CURRENT_DATE() - dateEmp\par
+\tab\tab\tab\tab\tab ELSE dateRet - dateEmp\par
+\tab\tab\tab\tab END) > dureeMax\par
+\tab\tab\tab\tab OR (dateRet - dateEmp) <= dureeMax);\par
+\par
++--------------+\par
+| Duree_retard |\par
++--------------+\par
+|    -700.9630 |\par
++--------------+\par
+1 row in set (0,00 sec)\par
+\par
+\\subsection\{Dur\'c3\'a9e moyenne des retards parmi les seuls retardataires.\}\par
+\par
+SELECT \par
+    AVG(CASE\par
+        WHEN dateRet IS NULL THEN CURRENT_DATE() - dateEmp\par
+        ELSE dateRet - dateEmp\par
+    END) AS Duree_retard\par
+FROM\par
+    emprunter\par
+WHERE\par
+    ((CASE\par
+        WHEN dateRet IS NULL THEN CURRENT_DATE() - dateEmp\par
+        ELSE dateRet - dateEmp\par
+    END) > dureeMax);\par
+\par
++--------------+\par
+| Duree_retard |\par
++--------------+\par
+|    1321.0000 |\par
++--------------+\par
+\par
+}
+ 
